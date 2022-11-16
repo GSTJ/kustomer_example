@@ -1,0 +1,26 @@
+{
+  "name": "test_app",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "scripts": {
+    "test": "npx jest --no-cache",
+    "build": "npm --prefix=web install && npm --prefix=web run build",
+    "start": "ts-node ."
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "@kustomer/apps-server-sdk": "^0.0.55",
+    "dotenv": "^16.0.1",
+    "sinon": "^14.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  }
+}
