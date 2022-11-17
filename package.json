@@ -16,14 +16,10 @@
   "dependencies": {
     "@kustomer/apps-server-sdk": "^0.0.55",
     "dotenv": "^16.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "sinon": "^14.0.2"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.4"
   }
