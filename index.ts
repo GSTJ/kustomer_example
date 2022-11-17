@@ -50,8 +50,16 @@ const kapp = new KApp({
   },
 });
 
-kapp.useSettings("Test Settings", "Put your settings here", "web");
-kapp.app.use("web", express.static(path.join(process.cwd(), "web")));
+kapp.useView("my-example-view", "views", {
+  displayName: "My example view",
+  context: "smartbar-card",
+  resource: "conversation",
+  icon: "apps",
+  state: "open",
+  iframe: true,
+});
+
+kapp.app.use("/views", express.static(path.join(process.cwd(), "/src/views")));
 
 (async () => {
   try {
