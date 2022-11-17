@@ -59,7 +59,10 @@ kapp.useView("my-example-view", "views", {
   iframe: true,
 });
 
-kapp.app.use("/views", express.static(path.join(process.cwd(), "/views")));
+kapp.app.use(
+  "/views/my-example-view",
+  express.static(path.join(process.cwd(), "/views/build"))
+);
 
 (async () => {
   try {
