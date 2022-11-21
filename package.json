@@ -1,36 +1,21 @@
 {
-  "name": "slack_gabriel",
-  "version": "0.1.9",
-  "main": "index.ts",
+  "name": "slack-app",
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "scripts": {
     "start": "ts-node .",
     "lint": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=16.0.0"
-  },
-  "dependencies": {
-    "@kustomer/apps-server-sdk": "^0.0.55",
-    "@slack/bolt": "^3.12.2",
-    "dotenv": "^16.0.3",
-    "sinon": "^14.0.2"
-  },
+  "engines": {},
+  "dependencies": {},
   "devDependencies": {
-    "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "@typescript-eslint/parser": "^5.43.0",
-    "eslint": "^8.28.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prefer-arrow-functions": "^3.1.4",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-simple-import-sort": "^8.0.0",
-    "eslint-plugin-unused-imports": "^2.0.0",
-    "prettier": "^2.7.1",
-    "ts-node": "^10.8.1",
-    "typescript": "^4.7.4"
+    "@slack-app/eslint-config": "*"
   }
 }
