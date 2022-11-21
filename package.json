@@ -1,0 +1,23 @@
+{
+  "name": "slack-app",
+  "version": "0.2.2",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "server": "dotenv -e .env yarn workspace @slack-app/server",
+    "web": "dotenv -e .env yarn workspace @slack-app/web",
+    "lint": "eslint . --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@slack-app/eslint-config": "*",
+    "dotenv-cli": "^6.0.0"
+  }
+}
