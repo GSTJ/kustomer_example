@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
     "module": "CommonJS",
     "target": "ESNext",
     "experimentalDecorators": true,
@@ -14,7 +14,7 @@
     "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "allowJs": false,
@@ -26,5 +26,5 @@
     "files": true,
     "transpileOnly": true
   },
-  "include": ["**/*", "./package.json"]
+  "include": ["**/*", "**/**/*", "./package.json"]
 }
