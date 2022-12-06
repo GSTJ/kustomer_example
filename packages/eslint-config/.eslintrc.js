@@ -18,7 +18,16 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     'no-plusplus': 'warn',
     'import/no-duplicates': 'error',
-    'simple-import-sort/imports': 'error',
+    'simple-import-sort/imports': [
+      'error',
+      {
+        groups: [
+          // Side effect imports.
+          ['^\\u0000'],
+          ['^react(/.*)?$'],
+        ],
+      },
+    ],
     'simple-import-sort/exports': 'error',
     'no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',

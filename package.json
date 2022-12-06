@@ -1,6 +1,6 @@
 {
   "name": "slack-app",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "private": true,
   "workspaces": {
     "packages": [
@@ -8,8 +8,9 @@
     ]
   },
   "scripts": {
+    "shared": "dotenv -e .env yarn workspace @slack-app/shared",
     "server": "dotenv -e .env yarn workspace @slack-app/server",
-    "web": "dotenv -e .env yarn workspace @slack-app/web",
+    "web": "PORT=3001 dotenv -e .env yarn workspace @slack-app/web",
     "lint": "eslint . --fix"
   },
   "author": "",

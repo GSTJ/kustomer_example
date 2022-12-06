@@ -1,6 +1,8 @@
 import "./commands";
+import "./hooks/onConversationUpdate";
 
 import kapp from "./services/kapp";
+import { slackExpressReceiver } from "./services/sapp";
 
 export { kapp };
 
@@ -10,10 +12,13 @@ kapp.useSettings(
   "../web/build"
 );
 
+kapp.app.use(slackExpressReceiver.app);
+
 (async () => {
   try {
     await kapp.start({ port: Number(process.env.PORT || 3000) });
   } catch (err) {
-    kapp.log.error(JSON.stringify(err, undefined, 2));
+    // eslint-disable-next-line no-console
+    console.error(JSON.stringify(err));
   }
 })();

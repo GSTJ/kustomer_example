@@ -1,5 +1,6 @@
-import { Button, Container, Loading, Text } from "@nextui-org/react";
 import { ReactElement } from "react";
+
+import { Button, Container, Loading, Text } from "@nextui-org/react";
 
 interface IRefetch {
   refetch?: () => void;
@@ -13,8 +14,10 @@ interface RequestHandlerProps extends IRefetch {
 
 export const ErrorComponent = ({ refetch }: IRefetch) => {
   return (
-    <Container css={{ jc: "center", ai: "center", d: "flex" }}>
-      <Text>Something went wrong, please try again later.</Text>
+    <Container css={{ jc: "center", ai: "center", d: "flex", fd: "column" }}>
+      <Text css={{ mb: "$sm" }}>
+        Something went wrong, please try again later.
+      </Text>
       <Button onClick={refetch}>Try again</Button>
     </Container>
   );

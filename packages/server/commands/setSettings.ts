@@ -1,36 +1,53 @@
-import { Commands } from "@slack-app/shared/types";
-
 import kapp from "../services/kapp";
 import sapp from "../services/sapp";
-import slackAuthStore from "../services/slackAuthStore";
+import { Commands } from "@slack-app/shared";
+
+const updateActiveChannel = async ({
+  token,
+  oldChannel,
+  newChannel,
+}: {
+  token: string;
+  oldChannel: string;
+  newChannel: string;
+}) => {
+  if (oldChannel === newChannel) return;
+
+  if (oldChannel) {
+    await sapp.client.conversations.leave({
+      token,
+      channel: oldChannel,
+    });
+  }
+
+  if (newChannel) {
+    await sapp.client.conversations.join({
+      token,
+      channel: newChannel,
+    });
+  }
+};
 
 kapp.onCommand(
   Commands.SetSettings,
   async (
     orgId: string,
     _userId: string,
-    data: {
-      default: { teamId?: string; channelId?: string };
-    }
+    data: { default: { channelId?: string } }
   ) => {
-    const session = slackAuthStore.get(orgId);
+    const settings = await kapp.org(orgId).settings.get();
+    const slackAuthData = JSON.parse(settings.default.slackAuthData);
 
-    if (!session || !session.bot) {
-      return kapp.log.warn(
-        "Auth session not found, sign-in to your Slack workplace"
-      );
+    if (!slackAuthData || !slackAuthData.bot) {
+      kapp.log.warn("Auth session not found, sign-in to your Slack workplace");
+      return;
     }
 
-    if (data.default.channelId) {
-      try {
-        await sapp.client.conversations.join({
-          token: session.bot.token,
-          channel: data.default.channelId,
-        });
-      } catch (err) {
-        kapp.log.error(err);
-      }
-    }
+    await updateActiveChannel({
+      token: slackAuthData.bot.token,
+      oldChannel: settings.default.channelId,
+      newChannel: data.default.channelId,
+    });
 
     return kapp.org(orgId).settings.set(data);
   }

@@ -1,13 +1,14 @@
-import { Commands } from "@slack-app/shared/types";
-
 import kapp from "../services/kapp";
 import sapp from "../services/sapp";
-import slackAuthStore from "../services/slackAuthStore";
+import { Commands } from "@slack-app/shared";
 
-kapp.onCommand(Commands.GetTeamChannels, (orgId: string) => {
-  const session = slackAuthStore.get(orgId);
+kapp.onCommand(Commands.GetTeamChannels, async (orgId: string) => {
+  const settings = await kapp.org(orgId).settings.get();
+  const slackAuthData = JSON.parse(settings.default.slackAuthData);
 
-  if (!session || !session.bot) return;
+  if (!slackAuthData || !slackAuthData.bot) return;
 
-  return sapp.client.conversations.list({ token: session.bot.token });
+  return sapp.client.conversations.list({
+    token: slackAuthData.bot.token,
+  });
 });

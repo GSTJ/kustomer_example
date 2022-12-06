@@ -1,8 +1,9 @@
+import { useEffect, useState } from "react";
+
+import RequestHandler from "./components/RequestHandler";
+import Settings from "./views/Settings";
 import { createTheme, NextUIProvider } from "@nextui-org/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from "react";
-
-import Settings from "./views/Settings";
 
 const theme = createTheme({
   type: "light",
@@ -16,18 +17,24 @@ const theme = createTheme({
 const queryClient = new QueryClient();
 
 const AppContainer = () => {
+  const [initializationError, setInitializationError] =
+    useState<boolean>(false);
+  const [appName, setAppName] = useState<string>();
+
   useEffect(() => {
     window.Kustomer?.initialize?.((context: any) => {
-      if (context) {
-        window.Kustomer.resize();
-      }
+      if (!context) return setInitializationError(true);
+      setAppName(context.app.attributes.name);
+      window.Kustomer.resize();
     });
   }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <NextUIProvider theme={theme}>
-        <Settings />
+        <RequestHandler loading={!appName} error={initializationError}>
+          <Settings appName={appName} />
+        </RequestHandler>
       </NextUIProvider>
     </QueryClientProvider>
   );

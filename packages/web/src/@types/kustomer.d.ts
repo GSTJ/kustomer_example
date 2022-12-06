@@ -12,6 +12,10 @@ declare const Kustomer = {
   resize: (): void => {},
 
   showModal: (params: any): void => {},
+
+  command: {
+    run: (params: any, body: any, cb?: any): void => {},
+  },
 };
 
 interface Window {

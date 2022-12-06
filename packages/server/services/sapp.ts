@@ -1,15 +1,25 @@
+import { getCookie } from "../utils/getCookie";
+import kapp from "./kapp";
 import { App as SApp, ExpressReceiver, InstallURLOptions } from "@slack/bolt";
 import { IncomingMessage, ServerResponse } from "http";
 import url from "url";
 
-import { getCookie } from "../utils/getCookie";
-import slackAuthStore from "./slackAuthStore";
-
-const receiver = new ExpressReceiver({
+export const slackExpressReceiver = new ExpressReceiver({
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
-  installationStore: slackAuthStore,
+  installationStore: {
+    storeInstallation: async (installation) => {
+      if (!installation.metadata) throw new Error("no metadata");
+
+      return kapp.org(installation.metadata).settings.set({
+        default: { slackAuthData: JSON.stringify(installation) },
+      });
+    },
+
+    fetchInstallation: () => ({} as any),
+    deleteInstallation: () => ({} as any),
+  },
   stateSecret: process.env.CLIENT_SECRET,
   installerOptions: {
     stateVerification: true,
@@ -19,8 +29,7 @@ const receiver = new ExpressReceiver({
         if (!req.url) return false;
 
         const query = url.parse(req.url, true).query;
-
-        if (!query.orgId) return false;
+        if (!query.orgId) return true;
 
         res.setHeader("Set-Cookie", [
           `orgId=${query.orgId}; Secure; HttpOnly; Path=/; Max-Age=600`,
@@ -50,6 +59,6 @@ const receiver = new ExpressReceiver({
   ],
 });
 
-const sapp = new SApp({ receiver });
+const sapp = new SApp({ receiver: slackExpressReceiver });
 
 export default sapp;

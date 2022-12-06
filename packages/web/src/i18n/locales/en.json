@@ -1,0 +1,14 @@
+{
+  "common": {
+    "save": "Save"
+  },
+  "settings": {
+    "installSlackModal": {
+      "title": "Install In Slack",
+      "description": "You will need to go to Slack and install the Kustomer app.\nClick \"Install In Slack\" below."
+    },
+    "installInSlack": "Install In Slack",
+    "installInSlackFirst": "To use this app, you first need to add our bot to your Slack",
+    "selectChannel": "Select your preferred Slack channel:"
+  }
+}
