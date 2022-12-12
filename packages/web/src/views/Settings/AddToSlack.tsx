@@ -1,5 +1,6 @@
 import React from "react";
 
+import store from "../../services/store";
 import { Text } from "@nextui-org/react";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
@@ -24,8 +25,10 @@ const linkSlackAccount = (orgId: string) => {
   });
 };
 
-const AddToSlack: React.FC<{ orgId: string }> = ({ orgId }) => {
+const AddToSlack: React.FC = () => {
   const { t } = useTranslation();
+
+  const { orgId } = React.useContext(store);
 
   return (
     <div

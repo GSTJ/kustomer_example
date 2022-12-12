@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 
 import RequestHandler from "../../components/RequestHandler";
-import { getCommandName, kustomerCommandRun } from "../../utils";
+import { axiosRequest } from "../../utils";
 import { Button, Card, Loading, Text } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { t } from "i18next";
 import Select from "react-select";
 
-const SetSettings: React.FC<{ appName: string; settings: any }> = ({
-  appName,
-  settings,
-}) => {
+const SetSettings: React.FC<{ settings: any }> = ({ settings }) => {
   const [activeChannel, setActiveChannel] = useState({
     value: settings.default.channelId,
   });
@@ -20,18 +17,16 @@ const SetSettings: React.FC<{ appName: string; settings: any }> = ({
     error: settingsOptionsError,
     isLoading: settingsOptionsLoading,
   } = useQuery({
-    queryFn: kustomerCommandRun,
-    queryKey: [getCommandName("getTeamChannels", appName)],
+    queryFn: axiosRequest,
+    queryKey: ["get", "/getSettingsOptions"],
   });
 
-  const saveSettings = useMutation(kustomerCommandRun);
+  const saveSettings = useMutation(axiosRequest);
 
   const channels = settingsOptions?.teamChannels?.channels?.map((channel) => ({
     value: channel.id,
     label: channel.name,
   }));
-
-  console.log(settingsOptions);
 
   const activeChannelOption = channels?.find(
     (channel) => channel.value === activeChannel.value
@@ -59,7 +54,8 @@ const SetSettings: React.FC<{ appName: string; settings: any }> = ({
             onClick={() => {
               saveSettings.mutate({
                 queryKey: [
-                  getCommandName("setSettings", appName),
+                  "post",
+                  "setSettings",
                   { default: { channelId: activeChannel.value } },
                 ],
               });

@@ -1,4 +1,5 @@
 import "./commands";
+import "./api/getTeamChannels";
 import "./hooks/onConversationUpdate";
 
 import kapp from "./services/kapp";

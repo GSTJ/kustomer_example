@@ -23,8 +23,5 @@ kapp.app.get("/getSettingsOptions", async ({ params }, res) => {
       .catch(console.log),
   ]);
 
-  console.log("users", users);
-  console.log("teams", teams);
-
   return res.json({ teamChannels, users, teams });
 });
