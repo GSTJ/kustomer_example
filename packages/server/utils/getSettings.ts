@@ -5,7 +5,7 @@ interface GetSettingsReturn {
   default: {
     slackAuthData: Installation<never, boolean>;
     channelId: string;
-    priorityLevel: string;
+    priorityLevel: number;
   };
 }
 

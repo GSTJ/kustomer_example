@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 
 import { Button, Container, Loading, Text } from "@nextui-org/react";
+import { useTranslation } from "react-i18next";
 
 interface IRefetch {
   refetch?: () => void;
@@ -13,12 +14,12 @@ interface RequestHandlerProps extends IRefetch {
 }
 
 export const ErrorComponent = ({ refetch }: IRefetch) => {
+  const { t } = useTranslation();
+
   return (
     <Container css={{ jc: "center", ai: "center", d: "flex", fd: "column" }}>
-      <Text css={{ mb: "$sm" }}>
-        Something went wrong, please try again later.
-      </Text>
-      <Button onClick={refetch}>Try again</Button>
+      <Text css={{ mb: "$sm" }}>{t("requestHandler.somethingWentWrong")}</Text>
+      <Button onClick={refetch}>{t("requestHandler.tryAgain")}</Button>
     </Container>
   );
 };

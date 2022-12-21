@@ -73,7 +73,7 @@ const kapp = new KApp({
         type: "number",
         hidden: false,
         required: false,
-        defaultValue: undefined,
+        defaultValue: "",
       },
     },
   },
