@@ -64,14 +64,18 @@ const SetSettings: React.FC<{ settings: any }> = ({ settings }) => {
       <Card css={{ overflow: "visible" }}>
         <Card.Body css={{ pb: "$sm", pt: 0, f: 1, overflow: "visible" }}>
           <Spacer />
-          <Text b>{t("settings.selectChannel")}</Text>
+          <Text b css={{ mb: "$2" }}>
+            {t("settings.selectChannel")}
+          </Text>
           <Select
             options={channels}
             value={activeChannelOption}
             onChange={({ value }) => setActiveChannel(value)}
           />
           <Spacer />
-          <Text b>{t("settings.filterByPriority")}</Text>
+          <Text b css={{ mb: "$2" }}>
+            {t("settings.filterByPriority")}
+          </Text>
           <Select
             value={{ value: priorityLevel, label: priorityLevel }}
             options={priorityLevels}

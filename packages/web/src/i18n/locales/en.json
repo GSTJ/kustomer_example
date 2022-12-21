@@ -10,7 +10,7 @@
     "installInSlack": "Install In Slack",
     "installInSlackFirst": "To use this app, you first need to add our bot to your Slack",
     "selectChannel": "Select your preferred Slack channel:",
-    "filterByPriority": "Filter by priority"
+    "filterByPriority": "Filter by priority over:"
   },
   "requestHandler": {
     "somethingWentWrong": "Something went wrong. Please try again later.",
