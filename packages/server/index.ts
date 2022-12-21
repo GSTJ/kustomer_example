@@ -1,7 +1,8 @@
-import "./commands";
-import "./api/getTeamChannels";
+import "express-async-errors";
 import "./hooks/onConversationUpdate";
 
+import { errorHandler } from "./middlewares/errorHandler";
+import router from "./routes";
 import kapp from "./services/kapp";
 import { slackExpressReceiver } from "./services/sapp";
 
@@ -14,6 +15,8 @@ kapp.useSettings(
 );
 
 kapp.app.use(slackExpressReceiver.app);
+kapp.app.use(router);
+kapp.app.use(errorHandler);
 
 (async () => {
   try {

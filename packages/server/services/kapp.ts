@@ -69,6 +69,12 @@ const kapp = new KApp({
         required: false,
         defaultValue: "",
       },
+      priorityLevel: {
+        type: "number",
+        hidden: false,
+        required: false,
+        defaultValue: undefined,
+      },
     },
   },
 });

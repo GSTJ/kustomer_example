@@ -1,13 +1,13 @@
 import React from "react";
 
-import store from "../../services/store";
+import api from "../../services/api";
 import { Text } from "@nextui-org/react";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
-const linkSlackAccount = (orgId: string) => {
+const linkSlackAccount = () => {
   window.Kustomer.showModal({
     type: "redirect",
     content: {
@@ -19,7 +19,7 @@ const linkSlackAccount = (orgId: string) => {
       showCancelButton: true,
       actionButton: {
         text: i18n.t("settings.installInSlack"),
-        linkUrl: `${baseURL}/slack/install?orgId=${orgId}`,
+        linkUrl: `${baseURL}/slack/install?orgId=${api.defaults.params?.orgId}`,
       },
     },
   });
@@ -27,8 +27,6 @@ const linkSlackAccount = (orgId: string) => {
 
 const AddToSlack: React.FC = () => {
   const { t } = useTranslation();
-
-  const { orgId } = React.useContext(store);
 
   return (
     <div
@@ -42,10 +40,7 @@ const AddToSlack: React.FC = () => {
       <Text h6 css={{ m: 0 }}>
         {t("settings.installInSlackFirst")}
       </Text>
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => linkSlackAccount(orgId)}
-      >
+      <div style={{ cursor: "pointer" }} onClick={linkSlackAccount}>
         <img
           alt="Add to Slack"
           height="40"

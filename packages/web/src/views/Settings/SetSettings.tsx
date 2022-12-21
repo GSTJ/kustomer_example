@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import RequestHandler from "../../components/RequestHandler";
-import { axiosRequest } from "../../utils";
+import api from "../../services/api";
 import { Button, Card, Loading, Text } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { t } from "i18next";
@@ -17,11 +17,21 @@ const SetSettings: React.FC<{ settings: any }> = ({ settings }) => {
     error: settingsOptionsError,
     isLoading: settingsOptionsLoading,
   } = useQuery({
-    queryFn: axiosRequest,
-    queryKey: ["get", "/getSettingsOptions"],
+    queryHash: "/settings/options",
+    queryFn: async () => {
+      const result = await api.get("/settings/options");
+      return result.data;
+    },
   });
 
-  const saveSettings = useMutation(axiosRequest);
+  const saveSettings = useMutation({
+    mutationFn: async () => {
+      const result = await api.post("/settings", {
+        default: { channelId: activeChannel.value },
+      });
+      return result.data;
+    },
+  });
 
   const channels = settingsOptions?.teamChannels?.channels?.map((channel) => ({
     value: channel.id,
@@ -51,15 +61,7 @@ const SetSettings: React.FC<{ settings: any }> = ({ settings }) => {
         <Card.Footer css={{ jc: "flex-end", zIndex: 0 }}>
           <Button
             disabled={saveSettings.isLoading}
-            onClick={() => {
-              saveSettings.mutate({
-                queryKey: [
-                  "post",
-                  "setSettings",
-                  { default: { channelId: activeChannel.value } },
-                ],
-              });
-            }}
+            onClick={() => saveSettings.mutate()}
           >
             {saveSettings.isLoading ? (
               <Loading color="white" size="sm" />
